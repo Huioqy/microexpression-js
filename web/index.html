@@ -1,0 +1,105 @@
+<html>
+<head>
+	<title>MicroExpression-Demo</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+	<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+
+	<!-- Bootstrap -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap -->
+
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	<script src="openvidu-browser-2.14.0.js"></script>
+	<script src="face-api.min.js"></script>
+	<script src="app.js"></script>
+	<!-- <style>
+		canvas {
+		  position: absolute;
+		}
+	</style> -->
+</head>
+
+<body>
+
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+			</div>
+		</div>
+	</nav>
+
+	<div id="main-container" class="container">
+		<div id="join">
+			<!-- <div id="img-div"><img src="resources/images/oc_logo_lanscape.png" /></div> -->
+			<div id="join-dialog" class="jumbotron vertical-center">
+				<h1>Join a video session</h1>
+				<form class="form-group" onsubmit="joinSession(); return false">
+					<p>
+						<label class="label-title">Session</label>
+						<input class="form-control" type="text" id="sessionId" required>
+                    </p>
+                    <p>
+						<label class="label-title">Participant</label>
+						<input class="form-control" type="text" id="userName" required>
+                    </p>
+                    <p>
+                        <label class="label-title">Role</label>
+                        <div id="radio-btns">
+                            <label class="radio-inline" data-toggle="tooltip" data-placement="top" title="Subscribers cannot publish video and therefore cannot apply filters">
+                                <input type="radio" onclick="handleRadioBtnClick(this)" name="role" value="SUBSCRIBER">Subscriber
+                            </label>
+                            <label class="radio-inline" data-toggle="tooltip" data-placement="top" title="Publishers can apply filters to their own streams">
+                                <input type="radio" onclick="handleRadioBtnClick(this)" name="role" value="PUBLISHER" checked>Publisher
+                            </label>
+						</div>
+                    </p>
+					<p class="text-center">
+						<input class="btn btn-lg btn-success" type="submit" name="commit" value="Join!">
+					</p>
+				</form>
+			</div>
+		</div>
+
+		<div id="session" style="display: none;">
+			<div id="session-header">
+				<h1 id="session-title"></h1>
+
+				<div id="div-btns">
+					<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" onmouseup="leaveSession()" value="Leave session">
+					<label >ME-Video Source:</label>
+					<input type="text" id="mevideoSource" />
+					<input class="btn btn-large btn-primary" type="button" id="buttonStartME" onmouseup="startME()" value="Start MicroExpression">
+					<input class="btn btn-large btn-primary" type="button" id="buttonStartME" onmouseup="stopME()" value="Stop MicroExpression">
+				</div>
+				
+			
+				<div  style="flex: 1; display: flex;">
+					<div id="main-video" style="flex: 1">
+						<div id="main-video-data">
+							<p></p>
+						</div>
+						<video autoplay playsinline="true" muted ></video>
+					</div>
+
+					<div style="position: relative; flex: 1; margin-left: 8px;">
+						<canvas id="me-canvas" style="width: 100%;"></canvas>
+						<!-- <video id="me-video" autoplay playsinline="true" ></video> -->
+						<div id="me-video-data" style="position: absolute; left: 16px; top: 0; color: white">
+								<p id="fps"></p>
+						</div>
+					</div>
+				</div>
+				
+				<h2 id="Participants">Participants</h2>
+				<div id="video-container"></div>
+				
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
